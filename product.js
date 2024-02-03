@@ -16,7 +16,7 @@ const app = createApp({
             '$1',
         );
         console.log(token);
-        const api = `${url}api/${path}admin/products/all`;
+        const api = `${url}api/${path}/admin/products/all`;
         console.log(api)
     }
 })
