@@ -1,19 +1,31 @@
-
 import {createApp} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
 
-const url = 'https://vue3-course-api.hexschool.io/v2';
-
-
+const url = 'https://vue3-course-api.hexschool.io/v2/';
+const path = 'sheng-apitest';
 
 const app = createApp({
     data(){
         return{
-            text='1234'
+            user:{
+                username:'',
+                password:''
+            },
         }
     },
-    mounted(){
-        console.log(this.text)
+    methods:{
+        login(){
+            const api = `${url}admin/signin`;
+            axios.post(api, this.user)
+            .then(res=>{
+                const{token, expired}=res.data;
+                document.cookie = `hexschoolToken=${token}; expires=${new Date(expired)}`;
+                window.location = 'product.html'
+            })
+            .catch(err=>{
+                alert('登入失敗')
+            })
+        }
     }
 })
+app.mount('#app');
 
-app.mount('#app')
