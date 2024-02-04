@@ -1,4 +1,4 @@
-import {creatApp} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+import {createApp} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
 
 const url = 'https://vue3-course-api.hexschool.io/v2/';
 const path = 'sheng-apitest';
@@ -6,8 +6,18 @@ const path = 'sheng-apitest';
 const app = createApp({
     data(){
         return{
-            temp:{},
+            tempProduct:{},
             products:[],
+            }
+    },
+    methods:{
+        getData(){
+            const api = `${url}api/${path}/admin/products/all`;
+            axios.get(api)
+        .then(res=>{
+            console.log(res)
+            this.products = res.data.products
+        })
         }
     },
     mounted(){
@@ -16,8 +26,9 @@ const app = createApp({
             '$1',
         );
         console.log(token);
-        const api = `${url}api/${path}/admin/products/all`;
-        console.log(api)
+        axios.defaults.headers.common['Authorization'] = token;
+        
+        this.getData()
     }
 })
 
